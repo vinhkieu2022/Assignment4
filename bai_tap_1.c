@@ -1,49 +1,53 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 struct node {
     int data;
     struct node* next;
-}
+};
+
 void display(struct node* head) {
     struct node* temp = head;
     if (head == NULL) {
-        printf("danh sach trong");
+        printf("Danh sach trong\n");
     } else {
         while (temp != NULL) {
-            printf ("%d ->", temp->data);
-            temp = temp -> next;
+            printf("%d -> ", temp->data);
+            temp = temp->next;
         }
         printf("NULL\n");
     }
 }
 
-void addback(struct node* head, int data) {
+// Sửa 'void' thành 'struct node*'
+struct node* addback(struct node* head, int data) {
     struct node* newnode = (struct node*)malloc(sizeof(struct node));
     newnode->data = data;
     newnode->next = NULL;
-  if (head == NULL) {
-    return newnode;
-  } else {
-    struct node* temp = head;
-    while (temp->next != NULL) {
-    temp = temp->next;
-  }
-   temp->next = newnode;
-   return head;
+    
+    if (head == NULL) {
+        return newnode;
+    } else {
+        struct node* temp = head;
+        while (temp->next != NULL) {
+            temp = temp->next;
+        }
+        temp->next = newnode;
+        return head;
+    }
 }
-}
+
 struct node* find(struct node* head, int data) {
     struct node* temp = head;
-    
     while (temp != NULL) {
         if (temp->data == data) {
             return temp; // Tìm thấy! Trả về con trỏ trỏ tới node này
         }
         temp = temp->next; // Bước tiếp
     }
-    
     return NULL; // Đi hết danh sách mà không thấy
 }
+
 struct node* delnode(struct node* head, struct node* pelement) {
     // Nếu danh sách trống hoặc node cần xóa không tồn tại
     if (head == NULL || pelement == NULL) return head;
@@ -71,6 +75,7 @@ struct node* delnode(struct node* head, struct node* pelement) {
 
     return head;
 }
+
 void freelist(struct node* head) {
     struct node* current = head;
     struct node* nextNode; // Biến tạm để "nhớ" đường
@@ -81,10 +86,6 @@ void freelist(struct node* head) {
         current = nextNode;       // 3. Bước sang nhà tiếp theo đã nhớ
     }
 }
-#include <stdio.h>
-#include <stdlib.h>
-
-// ... (Bạn copy các hàm display, addback, find, delnode, freelist vào đây) ...
 
 int main() {
     struct node* head = NULL; // Khởi tạo danh sách trống
